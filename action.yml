@@ -7,7 +7,7 @@ description: 'Uses the git branch as the docker tag and pushes the container'
 inputs:
   name:
     description: 'The name of the image you would like to push'
-    required: false
+    required: true
   username:
     description: 'The login username for the registry'
     required: true
@@ -19,7 +19,7 @@ inputs:
     required: false
   snapshot:
     description: 'Use snapshot to push an additional image'
-    required: true
+    required: false
   dockerfile:
     description: 'Use dockerfile when you would like to explicitly build a Dockerfile'
     required: false
