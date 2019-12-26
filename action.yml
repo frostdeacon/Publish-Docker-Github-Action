@@ -7,7 +7,7 @@ description: 'Uses the git branch as the docker tag and pushes the container'
 inputs:
   name:
     description: 'The name of the image you would like to push'
-    required: true
+    required: false
   username:
     description: 'The login username for the registry'
     required: true
@@ -34,7 +34,7 @@ inputs:
     required: false
   tag_names:
     description: 'Use tag_names when you want to push tags/release by their git name'
-    required: true
+    required: false
 outputs:
   tag:
     description: 'Is the tag, which was pushed'
