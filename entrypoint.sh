@@ -136,8 +136,8 @@ function pushWithSnapshot() {
 }
 
 function pushWithoutSnapshot() {
-  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} ${CONTEXT}
-  docker push ${DOCKERNAME}
+  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME}-(dev):$TAG ${CONTEXT}
+  docker push ${DOCKERNAME}-dev(dev):$TAG
 }
 
 main
