@@ -19,7 +19,7 @@ inputs:
     required: false
   snapshot:
     description: 'Use snapshot to push an additional image'
-    required: false
+    required: true
   dockerfile:
     description: 'Use dockerfile when you would like to explicitly build a Dockerfile'
     required: false
@@ -34,7 +34,7 @@ inputs:
     required: false
   tag_names:
     description: 'Use tag_names when you want to push tags/release by their git name'
-    required: false
+    required: true
 outputs:
   tag:
     description: 'Is the tag, which was pushed'
