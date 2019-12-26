@@ -136,8 +136,8 @@ function pushWithSnapshot() {
 }
 
 function pushWithoutSnapshot() {
-  docker build $BUILDPARAMS -t ${DOCKERNAME}:${SHA_DOCKER_NAME} .
-  docker push ${DOCKERNAME}:${SHA_DOCKER_NAME}
+  docker build $BUILDPARAMS -t ${DOCKERNAME} .
+  docker push ${DOCKERNAME}
 }
 
 main
