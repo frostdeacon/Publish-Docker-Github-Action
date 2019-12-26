@@ -139,9 +139,9 @@ function pushWithoutSnapshot() {
   local SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-6)
   local TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
   local LAST_TAG="${TAG}${SHORT_SHA}"
-  local SHA_LAST_TAG="${INPUT_NAME}:${LAST_TAG}"
-  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${SHA_LAST_TAG} ${CONTEXT}
-  docker push ${SHA_LAST_TAG}
+  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME}:latest -t ${DOCKERNAME}:${LAST_TAG} ${CONTEXT}
+  docker push ${DOCKERNAME}
+  docker push ${DOCKERNAME}:${LAST_TAG}
 }
 
 main
