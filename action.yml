@@ -34,7 +34,7 @@ inputs:
     required: false
   tag_names:
     description: 'Use tag_names when you want to push tags/release by their git name'
-    required: true
+    required: false
 outputs:
   tag:
     description: 'Is the tag, which was pushed'
