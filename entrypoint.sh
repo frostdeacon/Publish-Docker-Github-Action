@@ -129,14 +129,14 @@ function pushWithSnapshot() {
   ##local LAST_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -e "s/refs\/heads\///g")
   local LAST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
   local COMMITS_AHEAD=$(git rev-list ${LAST_TAG}.. --count | sed -e "s/0//g")
-  local BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' -e 's/^[ \t]*//;s/$/ /')
+  local LAST_BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' -e 's/^[ \t]*//;s/$/ /')
   ##local SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-6)
   local SNAPSHOT_TAG="${LAST_TAG}.${COMMITS_AHEAD}"
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
-  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${BRANCH}${SHA_DOCKER_NAME} ${CONTEXT}
+  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${LAST_BRANCH}${SHA_DOCKER_NAME} ${CONTEXT}
   ##docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   ##docker push ${DOCKERNAME}
-  docker push ${BRANCH}${SHA_DOCKER_NAME}
+  docker push ${LAST_BRANCH}${SHA_DOCKER_NAME}
   echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
 }
 
