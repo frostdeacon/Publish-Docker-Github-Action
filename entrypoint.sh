@@ -130,7 +130,7 @@ function pushWithSnapshot() {
   local LAST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
   local COMMITS_AHEAD=$(git rev-list ${LAST_TAG}.. --count | sed -e "s/0//g")
   ##local LAST_BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g")
-  local LAST_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
+  local LAST_BRANCH=$(git branch 2>/dev/null | grep '^*' | sed -e "s/* //g")
   ##local SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-6)
   local SNAPSHOT_TAG="${LAST_TAG}.${COMMITS_AHEAD}"
   local SHA_DOCKER_NAME="${INPUT_NAME}:${LAST_BRANCH}-${SNAPSHOT_TAG}"
