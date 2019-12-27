@@ -128,9 +128,9 @@ function pushWithSnapshot() {
   ##local TIMESTAMP=`date +%Y%m%d%H%M%S`
   ##local LAST_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -e "s/refs\/heads\///g")
   local LAST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-  local COMMITS_AHEAD=$(git rev-list ${LAST_TAG}.. --count | sed -e "s/0\/-\///g")
+  local COMMITS_AHEAD=$(git rev-list ${LAST_TAG}.. --count | sed -e "s/0//g")
   ##local SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-6)
-  local SNAPSHOT_TAG="${LAST_TAG}${COMMITS_AHEAD}"
+  local SNAPSHOT_TAG="${BRANCH}${LAST_TAG}.${COMMITS_AHEAD}"
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   ##docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${SHA_DOCKER_NAME} ${CONTEXT}
