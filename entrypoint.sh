@@ -132,11 +132,11 @@ function pushWithSnapshot() {
   local LAST_BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g")
   ##local SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-6)
   local SNAPSHOT_TAG="${LAST_TAG}.${COMMITS_AHEAD}"
-  local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
-  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${LAST_BRANCH}${SHA_DOCKER_NAME} ${CONTEXT}
+  local SHA_DOCKER_NAME="${INPUT_NAME}:${LAST_BRANCH}${SNAPSHOT_TAG}"
+  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   ##docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   ##docker push ${DOCKERNAME}
-  docker push ${LAST_BRANCH}${SHA_DOCKER_NAME}
+  docker push ${SHA_DOCKER_NAME}
   echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
 }
 
