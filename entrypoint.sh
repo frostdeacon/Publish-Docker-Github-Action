@@ -13,12 +13,12 @@ function main() {
     INPUT_NAME="${REGISTRY_NO_PROTOCOL}/${INPUT_NAME}"
   fi
 
-  #translateDockerTag
+  translateDockerTag
   DOCKERNAME="${INPUT_NAME}:${TAG}"
 
-  #if uses "${INPUT_WORKDIR}"; then
-  #  changeWorkingDirectory
-  #fi
+  if uses "${INPUT_WORKDIR}"; then
+    changeWorkingDirectory
+  fi
 
   echo ${INPUT_PASSWORD} | docker login -u ${INPUT_USERNAME} --password-stdin ${INPUT_REGISTRY}
 
@@ -61,43 +61,49 @@ function isPartOfTheName() {
   [ $(echo "${INPUT_NAME}" | sed -e "s/${1}//g") != "${INPUT_NAME}" ]
 }
 
-#function translateDockerTag() {
-#  local BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g")
-#  if hasCustomTag; then
-#    TAG=$(echo ${INPUT_NAME} | cut -d':' -f2)
-#    INPUT_NAME=$(echo ${INPUT_NAME} | cut -d':' -f1)
-#  elif isOnMaster; then
-#    TAG="latest"
-#  elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
-#    TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
-#  elif isGitTag; then
-#    TAG="latest"
-#  elif isPullRequest; then
-#    TAG="${GITHUB_SHA}"
-#  else
-#    TAG="${BRANCH}"
-#  fi;
-#}
+function translateDockerTag() {
+  local BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g")
+  if hasCustomTag; then
+    TAG=$(echo ${INPUT_NAME} | cut -d':' -f2)
+    INPUT_NAME=$(echo ${INPUT_NAME} | cut -d':' -f1)
+  elif isOnMaster; then
+    TAG="latest"
+  elif isOnDevelop; then
+    TAG="develop"
+  elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
+    TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
+  elif isGitTag; then
+    TAG="latest"
+  elif isPullRequest; then
+    TAG="${GITHUB_SHA}"
+  else
+    TAG="${BRANCH}"
+  fi;
+}
 
 function hasCustomTag() {
   [ $(echo "${INPUT_NAME}" | sed -e "s/://g") != "${INPUT_NAME}" ]
 }
 
-#function isOnMaster() {
-#  [ "${BRANCH}" = "master" ]
-#}
+function isOnMaster() {
+  [ "${BRANCH}" = "master" ]
+}
 
-#function isGitTag() {
-#  [ $(echo "${GITHUB_REF}" | sed -e "s/refs\/tags\///g") != "${GITHUB_REF}" ]
-#}
+function isOnDevelop() {
+  [ "${BRANCH}" = "develop" ]
+}
 
-#function isPullRequest() {
-#  [ $(echo "${GITHUB_REF}" | sed -e "s/refs\/pull\///g") != "${GITHUB_REF}" ]
-#}
+function isGitTag() {
+  [ $(echo "${GITHUB_REF}" | sed -e "s/refs\/tags\///g") != "${GITHUB_REF}" ]
+}
 
-#function changeWorkingDirectory() {
-#  cd "${INPUT_WORKDIR}"
-#}
+function isPullRequest() {
+  [ $(echo "${GITHUB_REF}" | sed -e "s/refs\/pull\///g") != "${GITHUB_REF}" ]
+}
+
+function changeWorkingDirectory() {
+  cd "${INPUT_WORKDIR}"
+}
 
 function useCustomDockerfile() {
   BUILDPARAMS="${BUILDPARAMS} -f ${INPUT_DOCKERFILE}"
@@ -129,12 +135,11 @@ function pushWithSnapshot() {
   ##local LAST_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -e "s/refs\/heads\///g")
   local LAST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
   local COMMITS_AHEAD=$(git rev-list ${LAST_TAG}.. --count | sed -e "s/0//g")
-  local BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g")
   ##local LAST_BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g")
   ##local LAST_BRANCH=$(git branch 2>/dev/null | grep '^*' | sed -e "s/* //g")
   ##local SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-6)
   local SNAPSHOT_TAG="${LAST_TAG}.${COMMITS_AHEAD}"
-  local SHA_DOCKER_NAME="${INPUT_NAME}:${BRANCH}-${SNAPSHOT_TAG}"
+  local SHA_DOCKER_NAME="${INPUT_NAME}:${GITHUB_REF}-${SNAPSHOT_TAG}"
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   ##docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   ##docker push ${DOCKERNAME}
