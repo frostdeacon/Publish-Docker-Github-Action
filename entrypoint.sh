@@ -127,11 +127,14 @@ function usesBoolean() {
 function pushWithSnapshot() {
   local LAST_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/refs\/tags\///g")
   local LAST_VER=$(git describe --tags $(git rev-list --tags --max-count=1))
-  local COMMITS_AHEAD=$(git rev-list ${LAST_TAG}.. --count)
+  local COMMITS_AHEAD=$(git rev-list ${LAST_VER}.. --count)
   local SNAPSHOT_TAG="${LAST_TAG}.${COMMITS_AHEAD}"
-  local SHA_DOCKER_NAME="${INPUT_NAME}:${GITHUB_REF}-${SNAPSHOT_TAG}"
+  local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
   if COMMITS_AHEAD==0; then
-    SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
+    SNAPSHOT_TAG="${LAST_TAG}"
+  fi
+  if LAST_TAG==develop; then
+    SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}-${LAST_VER}"
   fi
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   docker push ${SHA_DOCKER_NAME}
