@@ -133,6 +133,9 @@ function pushWithSnapshot() {
   if COMMITS_AHEAD==0; then
     SNAPSHOT_TAG="${LAST_TAG}"
   fi
+  if LAST_TAG=develop; then
+    SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
+  fi
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   docker push ${SHA_DOCKER_NAME}
   echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
