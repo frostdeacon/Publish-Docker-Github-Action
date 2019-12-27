@@ -13,7 +13,7 @@ function main() {
     INPUT_NAME="${REGISTRY_NO_PROTOCOL}/${INPUT_NAME}"
   fi
 
-  translateDockerTag
+  #translateDockerTag
   DOCKERNAME="${INPUT_NAME}:${TAG}"
 
   if uses "${INPUT_WORKDIR}"; then
