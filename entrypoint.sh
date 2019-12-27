@@ -126,7 +126,7 @@ function usesBoolean() {
 
 function pushWithSnapshot() {
   ##local TIMESTAMP=`date +%Y%m%d%H%M%S`
-  local LAST_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
+  local LAST_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -e "s/refs\/heads\///g")
   local SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-6)
   local SNAPSHOT_TAG="${LAST_TAG}-dev-${SHORT_SHA}"
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
