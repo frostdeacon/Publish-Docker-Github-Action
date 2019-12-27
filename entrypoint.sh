@@ -71,7 +71,7 @@ function translateDockerTag() {
   elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
     TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
   elif isGitTag; then
-    TAG="latest"
+    TAG="${BRANCH}"
   elif isPullRequest; then
     TAG="${GITHUB_SHA}"
   else
