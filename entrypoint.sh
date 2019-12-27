@@ -63,20 +63,20 @@ function isPartOfTheName() {
 
 function translateDockerTag() {
   local BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g")
-  if hasCustomTag; then
-    TAG=$(echo ${INPUT_NAME} | cut -d':' -f2)
-    INPUT_NAME=$(echo ${INPUT_NAME} | cut -d':' -f1)
-  elif isOnMaster; then
-    TAG="latest"
-  elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
-    TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
-  elif isGitTag; then
-    TAG="latest"
-  elif isPullRequest; then
-    TAG="${GITHUB_SHA}"
-  else
-    TAG="${BRANCH}"
-  fi;
+  #if hasCustomTag; then
+  #  TAG=$(echo ${INPUT_NAME} | cut -d':' -f2)
+  #  INPUT_NAME=$(echo ${INPUT_NAME} | cut -d':' -f1)
+  #elif isOnMaster; then
+  #  TAG="latest"
+  #elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
+  #  TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
+  #elif isGitTag; then
+  #  TAG="latest"
+  #elif isPullRequest; then
+  #  TAG="${GITHUB_SHA}"
+  #else
+  #  TAG="${BRANCH}"
+  #fi;
 }
 
 function hasCustomTag() {
