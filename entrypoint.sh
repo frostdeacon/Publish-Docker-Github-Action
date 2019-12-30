@@ -135,7 +135,7 @@ function pushWithSnapshot() {
   elif ${LAST_TAG}==${LAST_VER}; then
     SNAPSHOT_TAG="${LAST_VER}.${COMMITS_AHEAD}"
   fi
-  ##elif LAST_TAG==develop; then
+  ##elif LAST_TAG==develop; then 1
   ##  SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   ##fi
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
