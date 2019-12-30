@@ -134,7 +134,7 @@ function pushWithSnapshot() {
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG1} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG1}
   fi
-  if LAST_TAG=LAST_VER; then
+  if LAST_TAG==LAST_VER; then
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG1} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG1}
   else
