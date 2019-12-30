@@ -131,10 +131,10 @@ function pushWithSnapshot() {
   if ${COMMITS_AHEAD}=0; then
    SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}"
   fi
+  local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   if ${LAST_TAG}=${LAST_VER}; then
    SNAPSHOT_TAG="${LAST_VER}"
   fi
-  local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   docker push ${SHA_DOCKER_NAME}
