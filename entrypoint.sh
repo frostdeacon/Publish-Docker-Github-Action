@@ -128,14 +128,14 @@ function pushWithSnapshot() {
   local LAST_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/refs\/tags\///g")
   local LAST_VER=$(git describe --tags $(git rev-list --tags --max-count=1))
   local COMMITS_AHEAD=$(git rev-list ${LAST_VER}.. --count)
-  if ${LAST_TAG}=${LAST_VER}; then
-    local SNAPSHOT_TAG="${LAST_TAG}"
-  fi;
-  local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}" 
-  if ${COMMITS_AHEAD}=0; then
-    local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}"
-  fi;
-  local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
+  local IMAGE_TAG1="${LAST_TAG}" 
+  local IMAGE_TAG2="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
+  if COMMITS_AHEAD==0; then
+    SHA_DOCKER_NAME="${INPUT_NAME}:${IMAGE_TAG1}"
+  elif ${LAST_TAG}==${LAST_VER}; then
+    SHA_DOCKER_NAME="${INPUT_NAME}:${IMAGE_TAG2}"
+  fi
+  ##local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   docker push ${SHA_DOCKER_NAME}
   echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
