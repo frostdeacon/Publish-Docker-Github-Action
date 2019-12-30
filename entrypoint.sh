@@ -141,8 +141,8 @@ function pushWithSnapshot() {
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${INPUT_NAME}:${IMAGE_TAG2} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG2}
   fi
-  ##echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
 }
+##echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
 
 function pushWithoutSnapshot() {
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} ${CONTEXT}
