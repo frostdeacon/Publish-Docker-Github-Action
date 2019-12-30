@@ -140,7 +140,7 @@ function pushWithSnapshot() {
   else
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${INPUT_NAME}:${IMAGE_TAG2} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG2}
-    fi
+  fi
   ##echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
 }
 
