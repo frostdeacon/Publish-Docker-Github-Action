@@ -136,7 +136,7 @@ function pushWithSnapshot() {
     local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}"
   fi;
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
-  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${SHA_DOCKER_NAME} ${CONTEXT}
+  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   docker push ${SHA_DOCKER_NAME}
   echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
 }
