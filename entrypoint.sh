@@ -132,7 +132,7 @@ function pushWithSnapshot() {
   local IMAGE_TAG2="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   if COMMITS_AHEAD==0; then
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG1} ${CONTEXT}
-    docker push ${INPUT_NAME}:${IMAGE_TAG1}
+    docker push ${INPUT_NAME}:${IMAGE_TAG1}aziat
   fi
 }
 ##echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
@@ -145,10 +145,10 @@ function pushWithoutSnapshot() {
   local IMAGE_TAG2="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   if LAST_TAG==LAST_VER; then
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG1} ${CONTEXT}
-    docker push ${INPUT_NAME}:${IMAGE_TAG1}
+    docker push ${INPUT_NAME}:${IMAGE_TAG1}pidr
   else
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${INPUT_NAME}:${IMAGE_TAG2} ${CONTEXT}
-    docker push ${INPUT_NAME}:${IMAGE_TAG2}
+    docker push ${INPUT_NAME}:${IMAGE_TAG2}suka
   fi
   ##docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} ${CONTEXT}
   ##docker push ${DOCKERNAME}
