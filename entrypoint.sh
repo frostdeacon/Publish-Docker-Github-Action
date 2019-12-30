@@ -129,9 +129,10 @@ function pushWithSnapshot() {
   local LAST_VER=$(git describe --tags $(git rev-list --tags --max-count=1))
   local COMMITS_AHEAD=$(git rev-list ${LAST_VER}.. --count)
   local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
-  if COMMITS_AHEAD==0; then
+  if COMMITS_AHEAD=0; then
    SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}"
-  elif LAST_TAG==LAST_VER; then
+  fi
+  if LAST_TAG==LAST_VER; then
    SNAPSHOT_TAG="${LAST_VER}.${COMMITS_AHEAD}"
   fi
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
