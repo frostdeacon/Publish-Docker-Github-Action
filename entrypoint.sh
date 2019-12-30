@@ -133,9 +133,9 @@ function pushWithSnapshot() {
   if COMMITS_AHEAD==0; then
     SHA_DOCKER_NAME="${INPUT_NAME}:${IMAGE_TAG1}"
   elif ${LAST_TAG}==${LAST_VER}; then
-    SHA_DOCKER_NAME="${INPUT_NAME}:${IMAGE_TAG2}"
+    SHA_DOCKER_NAME="${INPUT_NAME}:${IMAGE_TAG1}"
   fi
-  ##local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
+  local SHA_DOCKER_NAME="${INPUT_NAME}:${IMAGE_TAG2}"
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   docker push ${SHA_DOCKER_NAME}
   echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
