@@ -130,12 +130,12 @@ function pushWithSnapshot() {
   local COMMITS_AHEAD=$(git rev-list ${LAST_VER}.. --count)
   local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
-    if COMMITS_AHEAD==0; then
-      local SNAPSHOT_TAG="${LAST_TAG}"
-    fi
-    if ${LAST_TAG}==${LAST_VER}; then
-      local SNAPSHOT_TAG="${LAST_VER}.${COMMITS_AHEAD}"
-    fi
+  if COMMITS_AHEAD==0; then
+    local SNAPSHOT_TAG="${LAST_TAG}"
+  fi
+  ##if ${LAST_TAG}==${LAST_VER}; then
+  ##  local SNAPSHOT_TAG="${LAST_VER}.${COMMITS_AHEAD}"
+  ##fi
   ##elif LAST_TAG==develop; then 1
   ##  SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   ##fi
