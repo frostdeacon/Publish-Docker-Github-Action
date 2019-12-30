@@ -130,11 +130,13 @@ function pushWithSnapshot() {
   local COMMITS_AHEAD=$(git rev-list ${LAST_VER}.. --count)
   local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}" 
-  if ${LAST_TAG}=${LAST_VER}; then
+  if [ ${LAST_TAG}=${LAST_VER} ]; then
     SNAPSHOT_TAG="${LAST_VER}"
   fi;
-  if ${COMMITS_AHEAD}=0; then
+  if [ ${COMMITS_AHEAD}==0 ]; then
     SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}"
+  else
+    SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   fi;
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${SHA_DOCKER_NAME} ${CONTEXT}
   docker push ${SHA_DOCKER_NAME}
