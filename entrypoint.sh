@@ -131,7 +131,7 @@ function pushWithSnapshot() {
   if COMMITS_AHEAD=0; then
    SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}"
   fi
-  if LAST_TAG=LAST_VER; then
+  if LAST_TAG=${LAST_VER}; then
    SNAPSHOT_TAG="${LAST_VER}"
   fi
   local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
