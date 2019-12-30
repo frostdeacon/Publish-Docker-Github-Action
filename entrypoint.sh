@@ -131,8 +131,7 @@ function pushWithSnapshot() {
   local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}"
   if COMMITS_AHEAD==0; then
    SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}"
-  fi
-  if LAST_TAG==LAST_VER; then
+  elif LAST_TAG==LAST_VER; then
    SNAPSHOT_TAG="${LAST_VER}.${COMMITS_AHEAD}"
   fi
   local SHA_DOCKER_NAME="${INPUT_NAME}:${SNAPSHOT_TAG}"
