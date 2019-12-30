@@ -128,10 +128,10 @@ function pushWithSnapshot() {
   local LAST_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/refs\/tags\///g")
   local LAST_VER=$(git describe --tags $(git rev-list --tags --max-count=1))
   local COMMITS_AHEAD=$(git rev-list ${LAST_VER}.. --count)
-  local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}" 
   if ${LAST_TAG}=${LAST_VER}; then
     local SNAPSHOT_TAG="${LAST_TAG}"
   fi;
+  local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}.${COMMITS_AHEAD}" 
   if ${COMMITS_AHEAD}=0; then
     local SNAPSHOT_TAG="${LAST_TAG}-${LAST_VER}"
   fi;
