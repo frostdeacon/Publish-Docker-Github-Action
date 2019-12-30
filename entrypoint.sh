@@ -133,7 +133,7 @@ function pushWithSnapshot() {
   if COMMITS_AHEAD==0; then
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG1} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG1}
-  elif LAST_TAG=${LAST_VER}; then
+  elif LAST_TAG=LAST_VER; then
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG1} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG1}
   else
