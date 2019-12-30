@@ -137,8 +137,8 @@ function pushWithSnapshot() {
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG1} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG1}
   else
-    docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG3} ${CONTEXT}
-    docker push ${INPUT_NAME}:${IMAGE_TAG3}
+    docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${DOCKERNAME} -t ${INPUT_NAME}:${IMAGE_TAG2} ${CONTEXT}
+    docker push ${INPUT_NAME}:${IMAGE_TAG2}
   fi
   ##echo ::set-output name=snapshot-tag::"${SNAPSHOT_TAG}"
 }
