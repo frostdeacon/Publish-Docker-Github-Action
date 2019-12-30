@@ -137,7 +137,7 @@ function pushWithSnapshot() {
   if ${LAST_TAG}==${LAST_VER}; then
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${INPUT_NAME}:${IMAGE_TAG1} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG1}
-  elif
+  else
     docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} -t ${INPUT_NAME}:${IMAGE_TAG2} ${CONTEXT}
     docker push ${INPUT_NAME}:${IMAGE_TAG2}
   fi
