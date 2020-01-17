@@ -16,7 +16,7 @@ inputs:
     required: true
   registry:
     description: 'Use registry for pushing to a custom registry'
-    required: false
+    required: true
   snapshot:
     description: 'Use snapshot to push an additional image'
     required: false
